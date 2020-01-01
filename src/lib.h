@@ -11,9 +11,10 @@
 using namespace std;
 
 struct RoadInfo {
-    char *startPoint, *endPoint;    // Начальный и конечный пункт
+    string startPoint, endPoint;
+    //char *startPoint, *endPoint;    // Начальный и конечный пункт
     int length;                     // Длина дороги
 };
 
 void readFile(ifstream &inputFile, RoadInfo *&roadInfo, int &quantityRoad);
-void step (const char *startPoint, const char *finishPoint, int p, char *road[], char *way[], bool isIncluded[]);
+void step (const string &startPoint, const string &finishPoint, int p, string *road, string *way, bool isIncluded[]);

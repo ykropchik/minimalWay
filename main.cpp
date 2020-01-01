@@ -119,10 +119,10 @@ using namespace std;
 
 RoadInfo *map;
 //set <char*> points;     // Множество пунктов
-char **points;
+string *points;
 bool isFound;
-char *start = new char[50];
-char *finish = new char[50];   // Начальный и конечный пункт
+string start;
+string finish;   // Начальный и конечный пункт
 int quantityRoad (0);   // Количество дорог
 int quantityPoint(0);   // Количество пунктов
 int foundedLength;      // Найденный "вес" маршрута
@@ -130,14 +130,14 @@ int actualLength;       // Текущий "вес" маршрута
 int wayLength;          // Длина самого короткого пути
 
 int countingPoints(RoadInfo *roads, int countRoads){
-    set <char*> pointsSet;
+    set <string> pointsSet;
 
     for (int i = 0; i < countRoads; ++i) {
         pointsSet.insert(roads[i].startPoint);
         pointsSet.insert(roads[i].endPoint);
     }
 
-    points = new char*[pointsSet.size()];
+    points = new string[pointsSet.size()];
 
     pointsSet.clear();
 
@@ -168,13 +168,13 @@ int main () {
     /**-----Подсчет кол-ва пунктов-----**/
     quantityPoint = countingPoints(map, quantityRoad);
 
-    char *road[quantityPoint];          // Номера узлов текущей "дороги"
+    string road[quantityPoint];          // Номера узлов текущей "дороги"
     bool isIncluded[quantityPoint];     //true, если i-ая вершина включена в путь
-    char *way[quantityPoint];           // Искомый самый короткий путь
+    string way[quantityPoint];           // Искомый самый короткий путь
 
     /**-----Обнуление массивов-----**/
     for (int i = 0; i < quantityPoint; i++) {
-        road[i] = way[i] = nullptr;
+        road[i] = way[i] = "";
         isIncluded[i] = false;
     }
 
@@ -190,13 +190,14 @@ int main () {
     road[0] = start;                                        // Первую точку внесли в маршрут
     isIncluded[0] = true;                                   // Пометили как включённую
     isFound = false;                                        // Но путь пока не найден
-    step (start,finish, 1, road, way, isIncluded);       // Ищем вторую точку
+    step (start, finish, 1, road, way, isIncluded);       // Ищем вторую точку
 
     /**-----Выводим результат-----**/
     if (isFound) {
-        cout << "Маршрут из " << start << " в " << finish << " найден!\n";
-        for (int i=0; i < wayLength; i++) cout << " " << way[i];
-        cout << ", длина маршрута: " << foundedLength;
+        cout << "Маршрут " << start << " - " << finish << " найден!\n";
+        cout << way[0];
+        for (int i = 1; i < wayLength; i++) cout << " - " << way[i];
+        cout << ", длина маршрута: " << foundedLength << " км";
     }
     else cout << "Путь не найден :(";
     cout << endl;
