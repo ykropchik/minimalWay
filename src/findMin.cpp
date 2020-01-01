@@ -3,7 +3,7 @@
 //
 #include "lib.h"
 
-extern RoadInfo *map;
+extern RoadInfo *mapPoints;
 extern string *points;
 extern bool isFound;
 extern string start, finish;   // Начальный и конечный пункт
@@ -15,9 +15,9 @@ extern int wayLength;          // Длина самого короткого п�
 
 int find (const string &startPoint, const string &endPoint) { //вес пути из startPoint и endPoint или 0, если пути нет
     for (int i=0; i < quantityRoad; i++) {
-        if ((map[i].startPoint == startPoint && map[i].endPoint == endPoint) ||
-            ((map[i].startPoint == endPoint) && map[i].endPoint == startPoint)) {
-            return map[i].length;
+        if ((mapPoints[i].startPoint == startPoint && mapPoints[i].endPoint == endPoint) ||
+            ((mapPoints[i].startPoint == endPoint) && mapPoints[i].endPoint == startPoint)) {
+            return mapPoints[i].length;
         }
     }
     return 0;
