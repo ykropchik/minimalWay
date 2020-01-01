@@ -42,7 +42,7 @@ struct item { //структура для описания элемента ка
 };
 
 const int m = 9; //количество путей по графу
-struct item map[m] = { //все пути, нумерация узлов с нуля
+struct item mapPoints[m] = { //все пути, нумерация узлов с нуля
         {0,1,1}, {0,2,1}, {2,3,1}, {1,4,1}, {2,4,1},
         {4,5,1}, {4,7,1}, {5,6,1}, {6,7,1}
 };
@@ -58,8 +58,8 @@ int c_len; //текущий "вес" маршрута
 
 int find (int s, int c) { //вес пути из s и c или 0, если пути нет
     for (int i=0; i<m; i++)
-        if (map[i].s==s && map[i].c==c ||
-            map[i].s==c && map[i].c==s) return map[i].v;
+        if (mapPoints[i].s==s && mapPoints[i].c==c ||
+            mapPoints[i].s==c && mapPoints[i].c==s) return mapPoints[i].v;
     return 0;
 }
 
@@ -117,8 +117,7 @@ int main () {
 
 using namespace std;
 
-RoadInfo *map;
-//set <char*> points;     // Множество пунктов
+RoadInfo *mapPoints;
 string *points;
 bool isFound;
 string start;
@@ -182,9 +181,9 @@ int main () {
 
     /**-----Получение начала и конца пути-----**/
     cout << "Введите начальный пункт: \n";
-    cin >> start;
+    getline(cin, start);
     cout << "Введите конечный пункт: \n";
-    cin >> finish;
+    getline(cin, finish);
 
     /**-----Начинаем поиск-----**/
     road[0] = start;                                        // Первую точку внесли в маршрут
