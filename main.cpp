@@ -20,36 +20,6 @@ int foundedLength;      // Найденный "вес" маршрута
 int actualLength;       // Текущий "вес" маршрута
 int wayLength;          // Длина самого короткого пути
 
-int countingPoints(RoadInfo *roads, int countRoads){
-    set <string> pointsSet;
-
-    for (int i = 0; i < countRoads; ++i) {
-        pointsSet.insert(roads[i].startPoint);
-        pointsSet.insert(roads[i].endPoint);
-    }
-
-    points = new string[pointsSet.size()];
-
-    pointsSet.clear();
-
-    int count(0);
-    for (int j = 0; j < countRoads; ++j) {
-        if (pointsSet.count(roads[j].startPoint) == 0){
-            points[count] = roads[j].startPoint;
-            pointsSet.insert(roads[j].startPoint);
-            ++count;
-        }
-
-        if (pointsSet.count(roads[j].endPoint) == 0){
-            points[count] = roads[j].endPoint;
-            ++count;
-        }
-        pointsSet.insert(roads[j].endPoint);
-    }
-
-    return count;
-}
-
 int main () {
 
     /**-----Читаю файл и заполняю массив-----**/

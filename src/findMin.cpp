@@ -15,6 +15,36 @@ extern int foundedLength;      // Найденный "вес" маршрута
 extern int actualLength;       // Текущий "вес" маршрута
 extern int wayLength;          // Длина самого короткого пути
 
+int countingPoints(RoadInfo *roads, int countRoads){
+    set <string> pointsSet;
+
+    for (int i = 0; i < countRoads; ++i) {
+        pointsSet.insert(roads[i].startPoint);
+        pointsSet.insert(roads[i].endPoint);
+    }
+
+    points = new string[pointsSet.size()];
+
+    pointsSet.clear();
+
+    int count(0);
+    for (int j = 0; j < countRoads; ++j) {
+        if (pointsSet.count(roads[j].startPoint) == 0){
+            points[count] = roads[j].startPoint;
+            pointsSet.insert(roads[j].startPoint);
+            ++count;
+        }
+
+        if (pointsSet.count(roads[j].endPoint) == 0){
+            points[count] = roads[j].endPoint;
+            ++count;
+        }
+        pointsSet.insert(roads[j].endPoint);
+    }
+
+    return count;
+}
+
 int find (const string &startPoint, const string &endPoint) { //вес пути из startPoint и endPoint или 0, если пути нет
     for (int i=0; i < quantityRoad; i++) {
         if ((mapPoints[i].startPoint == startPoint && mapPoints[i].endPoint == endPoint) ||

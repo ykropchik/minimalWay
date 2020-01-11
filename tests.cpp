@@ -18,37 +18,18 @@ int foundedLength;      // Найденный "вес" маршрута
 int actualLength;       // Текущий "вес" маршрута
 int wayLength;          // Длина самого короткого пути
 
-int countingPoints(RoadInfo *roads, int countRoads){
-    set <string> pointsSet;
-
-    for (int i = 0; i < countRoads; ++i) {
-        pointsSet.insert(roads[i].startPoint);
-        pointsSet.insert(roads[i].endPoint);
+void zeroing(string *road, string *way, bool *isIncluded){
+    for (int i = 0; i < quantityPoint; i++) {
+        road[i] = way[i] = "";
+        isIncluded[i] = false;
     }
-
-    points = new string[pointsSet.size()];
-
-    pointsSet.clear();
-
-    int count(0);
-    for (int j = 0; j < countRoads; ++j) {
-        if (pointsSet.count(roads[j].startPoint) == 0){
-            points[count] = roads[j].startPoint;
-            pointsSet.insert(roads[j].startPoint);
-            ++count;
-        }
-
-        if (pointsSet.count(roads[j].endPoint) == 0){
-            points[count] = roads[j].endPoint;
-            ++count;
-        }
-        pointsSet.insert(roads[j].endPoint);
-    }
-
-    return count;
 }
 
 TEST(findWay, expectedResult){
+    string *way = nullptr;
+    string *road = nullptr;
+    bool *isIncluded = nullptr;
+
     /**-----Читаю файл и заполняю массив-----**/
     ifstream inputFile("../input.txt");
     readFile(inputFile, mapPoints, quantityRoad);
@@ -56,15 +37,11 @@ TEST(findWay, expectedResult){
     /**-----Подсчет кол-ва пунктов-----**/
     quantityPoint = countingPoints(mapPoints, quantityRoad);
 
-    string road[quantityPoint];          // Номера узлов текущей "дороги"
-    bool isIncluded[quantityPoint];     //true, если i-ая вершина включена в путь
-    string way[quantityPoint];           // Искомый самый короткий путь
-
+    road = new string[quantityPoint];          // Номера узлов текущей "дороги"
+    isIncluded = new bool[quantityPoint];     //true, если i-ая вершина включена в путь
+    way = new string[quantityPoint];           // Искомый самый короткий путь
     /**-----Обнуление массивов-----**/
-    for (int i = 0; i < quantityPoint; i++) {
-        road[i] = way[i] = "";
-        isIncluded[i] = false;
-    }
+    zeroing(road, way, isIncluded);
 
     /**-----Начинаем поиск-----**/
     start = "Санкт-Петербург";
@@ -78,10 +55,7 @@ TEST(findWay, expectedResult){
     EXPECT_EQ(foundedLength, 712);
 
     /**-----Обнуление массивов-----**/
-    for (int i = 0; i < quantityPoint; i++) {
-        road[i] = way[i] = "";
-        isIncluded[i] = false;
-    }
+    zeroing(road, way, isIncluded);
 
     /**-----Начинаем поиск-----**/
     start = "Москва";
@@ -95,10 +69,7 @@ TEST(findWay, expectedResult){
     EXPECT_EQ(foundedLength, 0);
 
     /**-----Обнуление массивов-----**/
-    for (int i = 0; i < quantityPoint; i++) {
-        road[i] = way[i] = "";
-        isIncluded[i] = false;
-    }
+    zeroing(road, way, isIncluded);
 
     /**-----Начинаем поиск-----**/
     start = "Москва";
@@ -112,10 +83,7 @@ TEST(findWay, expectedResult){
     EXPECT_EQ(foundedLength, 1767);
 
     /**-----Обнуление массивов-----**/
-    for (int i = 0; i < quantityPoint; i++) {
-        road[i] = way[i] = "";
-        isIncluded[i] = false;
-    }
+    zeroing(road, way, isIncluded);
 
     /**-----Начинаем поиск-----**/
     start = "Санкт-Петербург";
@@ -129,10 +97,7 @@ TEST(findWay, expectedResult){
     EXPECT_EQ(foundedLength, 1818);
 
     /**-----Обнуление массивов-----**/
-    for (int i = 0; i < quantityPoint; i++) {
-        road[i] = way[i] = "";
-        isIncluded[i] = false;
-    }
+    zeroing(road, way, isIncluded);
 
     /**-----Начинаем поиск-----**/
     start = "Нижний Новгород";
