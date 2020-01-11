@@ -17,7 +17,9 @@ add_subdirectory(googletest)
 include_directories(src) # необходимо для того, чтобы писать в директиве просто lib.h
 include_directories(googletest/googletest/include)
 
-add_executable(nameSpaces main.cpp src/readFile.cpp src/findMin.cpp src/lib.h)
-add_executable(tests tests.cpp src/readFile.cpp src/findMin.cpp)
+set(SOURCE_FILES src/findMin.cpp src/readFile.cpp)
+
+add_executable(nameSpaces main.cpp ${SOURCE_FILES})
+add_executable(tests tests.cpp ${SOURCE_FILES})
 
 target_link_libraries(tests gtest)

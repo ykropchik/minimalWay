@@ -5,6 +5,8 @@
 #include "gtest/gtest.h"
 #include "src/lib.h"
 
+using namespace std;
+
 RoadInfo *mapPoints;
 string *points;
 bool isFound;

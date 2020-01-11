@@ -3,6 +3,8 @@
 //
 #include "lib.h"
 
+using namespace std;
+
 extern RoadInfo *mapPoints;
 extern string *points;
 extern bool isFound;

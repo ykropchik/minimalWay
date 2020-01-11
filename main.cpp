@@ -3,114 +3,6 @@
  * Найти кратчайший путь "из -> в" заданный пользователем
  * Максимальная последовательность может быть 4 пункта
  */
-//#include <iostream>
-//#include <fstream>
-//#include "src/lib.h"
-//
-//using namespace std;
-//
-//roadInfo *information = new roadInfo[10];;
-//unsigned int sizeArray;
-//unsigned int *matrix;
-//
-//int main() {
-//     try{
-//         ifstream inputFile("../input.txt");
-//
-//         try{
-//             readFile(inputFile, information, sizeArray);
-//         } catch (invalid_argument &err){
-//             cout << "Ошибка! " << err.what();
-//         }
-//     } catch(invalid_argument &err){
-//         cout << "Ошибка! " << err.what();
-//     }
-//
-//    for (int i = 0; i <= sizeArray; ++i) {
-//        cout << information[i].firstPoint << "|" << information[i].secondPoint << "|" << information[i].length << "\quantityPoint";
-//    }
-//    return 0;
-//}
-/*
-#include <iostream>
-#include <windows.h>
-using namespace std;
-
-struct item { //структура для описания элемента карты
-    int s,c; //начальный и конечный узлы
-    int v; //"вес" пути
-};
-
-const int m = 9; //количество путей по графу
-struct item mapPoints[m] = { //все пути, нумерация узлов с нуля
-        {0,1,1}, {0,2,1}, {2,3,1}, {1,4,1}, {2,4,1},
-        {4,5,1}, {4,7,1}, {5,6,1}, {6,7,1}
-};
-const int n = 8; //количество вершин графа
-int road[n]; //номера узлов текущей "дороги"
-bool incl[n]; //true, если i-ая вершина включена в путь
-int way[n]; //искомый самый короткий путь
-int waylen; //его длина
-int start, finish; //начальная и конечная вершины
-bool found;
-int len; //найденный "вес" маршрута
-int c_len; //текущий "вес" маршрута
-
-int find (int s, int c) { //вес пути из s и c или 0, если пути нет
-    for (int i=0; i<m; i++)
-        if (mapPoints[i].s==s && mapPoints[i].c==c ||
-            mapPoints[i].s==c && mapPoints[i].c==s) return mapPoints[i].v;
-    return 0;
-}
-
-void step (int s, int f, int p) { //рекурсивный поиск шага пути
-    int c; //номер вершины, куда делаем шаг
-    if (s==f) { //путь найден
-        found = true; //поставить флажок "найдено"
-        len = c_len; //запомнить общий вес пути
-        waylen = p; //запомнить длину пути (количество узлов)
-        for (int i=0; i<waylen; i++) way[i] = road[i]; //запомнить сам путь
-    }
-    else { //выбор очередной точки
-        for (c=0; c<n; c++) { //проверяем все вершины
-            int w = find(s,c); //есть ли путь из s в c
-            if (w && !incl[c] && (len==0 || c_len+w<len)) { //нужная точка не включена?
-                road[p] = c; //включить точку в путь
-                incl[c] = true; //пометить как включенную
-                c_len += w; //учесть в общем весе пути
-                step (c,f,p+1); //вызвать себя для поиска следующей точки
-                road[p] = 0; //вернуть всё как было
-                incl[c] = false;
-                c_len -= w;
-            }
-        }
-    }
-}
-
-int main () {
-    //Инициализация данных:
-    for (int i=0; i<n; i++) {
-        road[i]=way[i]=0; incl[i] = false;
-    }
-    len = c_len = waylen = 0;
-
-    start = 0; //начало пути - нумерация с 0
-    finish = 7; //конец пути - нумерация с 0
-    road[0] = start; //первую точку внесли в маршрут
-    incl[start] = true; //и пометили как включённую
-    found = false; //но путь пока не найден
-    step (start,finish,1); //ищем вторую точку
-
-    if (found) {
-        cout << "Way is";
-        for (int i=0; i<waylen; i++) cout << " " << way[i];
-        cout << ", weight is " << len;
-    }
-    else cout << "Way not found!";
-    cout << endl;
-    system ("pause");
-    return 0;
-} */
 
 #include <iostream>
 #include "src/lib.h"
@@ -162,10 +54,10 @@ int main () {
 
     /**-----Читаю файл и заполняю массив-----**/
     ifstream inputFile("../input.txt");
-    readFile(inputFile, map, quantityRoad);
+    readFile(inputFile, mapPoints, quantityRoad);
 
     /**-----Подсчет кол-ва пунктов-----**/
-    quantityPoint = countingPoints(map, quantityRoad);
+    quantityPoint = countingPoints(mapPoints, quantityRoad);
 
     string road[quantityPoint];          // Номера узлов текущей "дороги"
     bool isIncluded[quantityPoint];     //true, если i-ая вершина включена в путь
