@@ -9,37 +9,17 @@
 
 using namespace std;
 
-RoadInfo *mapPoints;
-string *points;
-bool isFound;
-string start;
-string finish;   // Начальный и конечный пункт
-int quantityRoad (0);   // Количество дорог
-int quantityPoint(0);   // Количество пунктов
-int foundedLength;      // Найденный "вес" маршрута
-int actualLength;       // Текущий "вес" маршрута
-int wayLength;          // Длина самого короткого пути
-
 int main () {
+
+    RoadInfo *mapPoints;
+    string start, finish;   // Начальный и конечный пункт
+    string *way = nullptr;
+    int quantityRoad (0);   // Количество дорог
+    int wayLength(0);          // Кол-во пунктов самого короткого пути
 
     /**-----Читаю файл и заполняю массив-----**/
     ifstream inputFile("../input.txt");
     readFile(inputFile, mapPoints, quantityRoad);
-
-    /**-----Подсчет кол-ва пунктов-----**/
-    quantityPoint = countingPoints(mapPoints, quantityRoad);
-
-    string road[quantityPoint];          // Номера узлов текущей "дороги"
-    bool isIncluded[quantityPoint];     //true, если i-ая вершина включена в путь
-    string way[quantityPoint];           // Искомый самый короткий путь
-
-    /**-----Обнуление массивов-----**/
-    for (int i = 0; i < quantityPoint; i++) {
-        road[i] = way[i] = "";
-        isIncluded[i] = false;
-    }
-
-    foundedLength = actualLength = wayLength = 0;
 
     /**-----Получение начала и конца пути-----**/
     cout << "Введите начальный пункт: \n";
@@ -47,14 +27,11 @@ int main () {
     cout << "Введите конечный пункт: \n";
     getline(cin, finish);
 
-    /**-----Начинаем поиск-----**/
-    road[0] = start;                                        // Первую точку внесли в маршрут
-    isIncluded[0] = true;                                   // Пометили как включённую
-    isFound = false;                                        // Но путь пока не найден
-    step (start, finish, 1, road, way, isIncluded);       // Ищем вторую точку
+    /**-----Запускаем поиск-----**/
+    int foundedLength = findingWay(mapPoints, quantityRoad, start, finish, way, wayLength);
 
     /**-----Выводим результат-----**/
-    if (isFound) {
+    if (foundedLength != -1) {
         cout << "Маршрут " << start << " - " << finish << " найден!\n";
         cout << way[0];
         for (int i = 1; i < wayLength; i++) cout << " - " << way[i];
